@@ -75,7 +75,5 @@ namespace agl
 
      // return the height of the image
      int height() const;
-
-     void assignStructRGB(const ppm_pixel& c);
   };
 }

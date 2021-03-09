@@ -116,10 +116,10 @@ bool ppm_image::save(const std::string& filename) const
  ppm_image ppm_image::resize(int w, int h) const
 {
     ppm_image result(w,h);
-    result.format = format;
-    result.maxColor = maxColor;
     int pixelRow, pixelColumn;
     ppm_pixel originalPixel;
+    result.format = format;
+    result.maxColor = maxColor;
     for (float i = 0; i < result.rows; i++) 
     {
         for (float j = 0; j < result.columns; j++)
@@ -135,14 +135,37 @@ bool ppm_image::save(const std::string& filename) const
     return result;
 }
 
- void ppm_image::assignStructRGB(const ppm_pixel& c) 
- {
-       
- }
 
 ppm_image ppm_image::flip_horizontal() const
 {
-    ppm_image result;
+    ppm_image result(columns,rows);
+    ppm_pixel originalPixel;
+    int pixelRow;
+    float middleRow = (rows-1) / 2.0;
+    result.format = format;
+    result.maxColor = maxColor;
+    for (float i = 0; i < middleRow; i++)
+    {
+        for (float j = 0; j < result.columns; j++)
+        {
+            pixelRow = middleRow + (middleRow - i);
+            originalPixel = get(pixelRow, j);
+            result.pixels.push_back(originalPixel.r);
+            result.pixels.push_back(originalPixel.g);
+            result.pixels.push_back(originalPixel.b);
+        }
+    }
+    for (int i = middleRow+1; i < result.rows; i++)
+    {
+        for (float j = 0; j < result.columns; j++)
+        {
+            pixelRow = middleRow - (i-middleRow);
+            originalPixel = get(pixelRow, j);
+            result.pixels.push_back(originalPixel.r);
+            result.pixels.push_back(originalPixel.g);
+            result.pixels.push_back(originalPixel.b);
+        }
+    }
     return result;
 }
 
