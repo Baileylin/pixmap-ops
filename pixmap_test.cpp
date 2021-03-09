@@ -8,10 +8,10 @@ int main(int argc, char** argv)
 {
    ppm_image image;
    image.load("../images/feep.ppm");
-  // image.save("feep-test-save.ppm"); // should match original
+   image.save("feep-test-save.ppm"); // should match original
    
    // should print 4 4
-   cout << "loaded feep: " << image.width() << " " << image.height() << endl;
+  // cout << "loaded feep: " << image.width() << " " << image.height() << endl;
    /*
    // test: copy constructor
    ppm_image copy = image; 
@@ -20,10 +20,10 @@ int main(int argc, char** argv)
    // test: assignment operator
    copy = image; 
    copy.save("feep-test-assignment.ppm"); // should match original and load into gimp
-   */
+   
    // should print r,g,b
    ppm_pixel pixel = image.get(1, 1);
-   cout << (int) pixel.r << " " << (int) pixel.g << " " << (int) pixel.b << endl;
+   //cout << (int) pixel.r << " " << (int) pixel.g << " " << (int) pixel.b << endl;
    
    // test: setting a color
    pixel.r = 255;

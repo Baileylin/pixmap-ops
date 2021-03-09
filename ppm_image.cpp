@@ -61,7 +61,8 @@ bool ppm_image::load(const std::string& filename)
 {
     ifstream readFile(filename);
     string ppmText;
-    int index =6;
+    vector<string> temporaryVector;
+    int index =0;
     if (!readFile) 
     {
         return false;
@@ -73,9 +74,6 @@ bool ppm_image::load(const std::string& filename)
         ppmText.append(text+" ");
     }
     readFile.close();
-    format = ppmText.substr(0, 2);
-    columns = stoi(ppmText.substr(3,1));
-    rows = stoi(ppmText.substr(5, 1));
     while(index < ppmText.size())
     {
         string temporary;
@@ -87,22 +85,34 @@ bool ppm_image::load(const std::string& filename)
         
         if (temporary != "") 
         {
-            pixels.push_back(stoi(temporary));
+            temporaryVector.push_back(temporary);
         }
         index++;
     }
-    for (int onePixel : pixels)
+    format = temporaryVector[0];
+    columns = stoi(temporaryVector[1]);
+    rows = stoi(temporaryVector[2]);
+    maxColor = stoi(temporaryVector[3]);
+    for (int i = 4; i < temporaryVector.size(); i++) 
     {
-        cout << onePixel<<" ";
+        pixels.push_back(stoi(temporaryVector[i]));
     }
     return true;
 }
 
 bool ppm_image::save(const std::string& filename) const
 {
-    string outputString;
-    //ofstream writeFile(filename);
-   // writeFile << outputString;
+    string outputString = "";
+    outputString = outputString + format + "\n";
+    outputString = outputString + to_string(columns) + " ";
+    outputString = outputString + to_string(rows) + "\n";
+    outputString = outputString + to_string(maxColor) + "\n";
+    for (int i = 0; i < pixels.size(); i++) 
+    {
+        outputString = outputString + to_string(pixels[i])+" ";
+    }
+    ofstream writeFile(filename);
+    writeFile << outputString;
     return true;
 }
 
