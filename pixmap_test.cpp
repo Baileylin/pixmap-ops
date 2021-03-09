@@ -20,14 +20,14 @@ int main(int argc, char** argv)
    // test: assignment operator
    copy = image; 
    copy.save("feep-test-assignment.ppm"); // should match original and load into gimp
-
+   */
    // should print r,g,b
    ppm_pixel pixel = image.get(1, 1);
    cout << (int) pixel.r << " " << (int) pixel.g << " " << (int) pixel.b << endl;
-
+   
    // test: setting a color
    pixel.r = 255;
-   image.set(1, 1, pixel);
+   image.set(1, 1, pixel);/*
    image.save("feep-test-newcolor.ppm");
 
    // test a non-trivial image

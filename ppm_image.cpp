@@ -100,7 +100,10 @@ bool ppm_image::load(const std::string& filename)
 
 bool ppm_image::save(const std::string& filename) const
 {
-   return false;
+    string outputString;
+    //ofstream writeFile(filename);
+   // writeFile << outputString;
+    return true;
 }
 
  ppm_image ppm_image::resize(int w, int h) const
@@ -145,11 +148,34 @@ ppm_image ppm_image::grayscale() const
 
 ppm_pixel ppm_image::get(int row, int col) const
 {
-   return ppm_pixel{ 0,0,0 };
+    int pixelNum, index;
+    if (row == 1) 
+    {
+        pixelNum = col;
+    }
+    else 
+    {
+        pixelNum = (row - 1) * columns + col;
+    }
+    index = pixelNum * 3 - 1;
+    return ppm_pixel{ (unsigned char) pixels[index-2], (unsigned char) pixels[index-1], (unsigned char) pixels[index] };
 }
 
 void ppm_image::set(int row, int col, const ppm_pixel& c)
 {
+    int pixelNum, index;
+    if (row == 1)
+    {
+        pixelNum = col;
+    }
+    else
+    {
+        pixelNum = (row - 1) * columns + col;
+    }
+    index = pixelNum * 3 - 1;
+    pixels[index - 2] = c.r;
+    pixels[index - 1] = c.g;
+    pixels[index] = c.b;
 }
 
 int ppm_image::height() const
