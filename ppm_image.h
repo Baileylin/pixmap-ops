@@ -5,6 +5,7 @@
 
 #pragma once
 #include <string>
+#include <vector>
 
 namespace agl
 {
@@ -17,6 +18,11 @@ namespace agl
 
   class ppm_image
   {
+  private:
+      std::string format;
+      int columns, rows;
+      int maxColor;
+      std::vector<int> pixels;;
   public:
      ppm_image();
      ppm_image(int width, int height);
