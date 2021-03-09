@@ -20,8 +20,10 @@ ppm_image::ppm_image()
 
 ppm_image::ppm_image(int w, int h) 
 {
+    format = "P3";
     columns = w;
     rows = h;
+    maxColor = 255;
 }
 
 ppm_image::ppm_image(const ppm_image& orig)
@@ -53,6 +55,7 @@ ppm_image::~ppm_image()
 
 bool ppm_image::load(const std::string& filename)
 {
+    pixels.clear();
     ifstream readFile(filename);
     string ppmText;
     vector<string> temporaryVector;
@@ -112,9 +115,30 @@ bool ppm_image::save(const std::string& filename) const
 
  ppm_image ppm_image::resize(int w, int h) const
 {
-     ppm_image result = new ppm_image( 2, 3);
-    return ppm_image(w,h);
+    ppm_image result(w,h);
+    result.format = format;
+    result.maxColor = maxColor;
+    int pixelRow, pixelColumn;
+    ppm_pixel originalPixel;
+    for (float i = 0; i < result.rows; i++) 
+    {
+        for (float j = 0; j < result.columns; j++)
+        {   
+            pixelRow = (i / (result.rows-1)) * (rows-1);
+            pixelColumn = (j / (result.columns - 1)) * (columns - 1);
+            originalPixel = get(pixelRow, pixelColumn);
+            result.pixels.push_back(originalPixel.r);
+            result.pixels.push_back(originalPixel.g);
+            result.pixels.push_back(originalPixel.b);
+        }
+    }
+    return result;
 }
+
+ void ppm_image::assignStructRGB(const ppm_pixel& c) 
+ {
+       
+ }
 
 ppm_image ppm_image::flip_horizontal() const
 {
@@ -153,33 +177,33 @@ ppm_image ppm_image::grayscale() const
 ppm_pixel ppm_image::get(int row, int col) const
 {
     int pixelNum, index;
-    if (row == 1) 
-    {
-        pixelNum = col;
-    }
-    else 
-    {
-        pixelNum = (row - 1) * columns + col;
-    }
-    index = pixelNum * 3 - 1;
-    return ppm_pixel{ (unsigned char) pixels[index-2], (unsigned char) pixels[index-1], (unsigned char) pixels[index] };
-}
-
-void ppm_image::set(int row, int col, const ppm_pixel& c)
-{
-    int pixelNum, index;
-    if (row == 1)
+    if (row == 0)
     {
         pixelNum = col;
     }
     else
     {
-        pixelNum = (row - 1) * columns + col;
+        pixelNum = row * columns + col;
     }
-    index = pixelNum * 3 - 1;
-    pixels[index - 2] = c.r;
-    pixels[index - 1] = c.g;
-    pixels[index] = c.b;
+    index = pixelNum * 3;
+    return ppm_pixel{ (unsigned char) pixels[index], (unsigned char) pixels[index+1], (unsigned char) pixels[index+2] };
+}
+
+void ppm_image::set(int row, int col, const ppm_pixel& c)
+{
+    int pixelNum, index;
+    if (row == 0)
+    {
+        pixelNum = col;
+    }
+    else
+    {
+        pixelNum = row * columns + col;
+    }
+    index = pixelNum * 3;
+    pixels[index] = c.r;
+    pixels[index + 1] = c.g;
+    pixels[index + 2] = c.b;
 }
 
 int ppm_image::height() const
