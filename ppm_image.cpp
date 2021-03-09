@@ -206,7 +206,22 @@ ppm_image ppm_image::gammaCorrect(float gamma) const
 
 ppm_image ppm_image::grayscale() const
 {
-   ppm_image result;
+   ppm_image result(columns,rows);
+   ppm_pixel originalPixel;
+   int pixelAverage;
+   result.format = format;
+   result.maxColor = maxColor;
+   for (int i = 0; i < result.rows; i++)
+   {
+       for (int j = 0; j < result.columns; j++)
+       {
+           originalPixel = get(i, j);
+           pixelAverage = (originalPixel.r + originalPixel.g + originalPixel.b)/3;
+           result.pixels.push_back(pixelAverage);
+           result.pixels.push_back(pixelAverage);
+           result.pixels.push_back(pixelAverage);
+       }
+   }
    return result;
 }
 
