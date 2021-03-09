@@ -171,7 +171,20 @@ ppm_image ppm_image::flip_horizontal() const
 
 ppm_image ppm_image::subimage(int startx, int starty, int w, int h) const
 {
-    ppm_image result;
+    ppm_image result(w,h);
+    ppm_pixel originalPixel;
+    result.format = format;
+    result.maxColor = maxColor;
+    for (int i = 0; i < result.rows; i++)
+    {
+        for (int j = 0; j < result.columns; j++)
+        {
+            originalPixel = get(startx + i, starty + j);
+            result.pixels.push_back(originalPixel.r);
+            result.pixels.push_back(originalPixel.g);
+            result.pixels.push_back(originalPixel.b);
+        }
+    }
     return result;
 }
 

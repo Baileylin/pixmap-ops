@@ -46,13 +46,13 @@ int main(int argc, char** argv)
   // grayscale.save("earth-grayscale.ppm");
 
    // flip horizontal
-   ppm_image flip = image.flip_horizontal(); 
-   flip.save("earth-flip.ppm"); 
-   /*
+   //ppm_image flip = image.flip_horizontal(); 
+   //flip.save("earth-flip.ppm"); 
+   
    // sub image
    ppm_image sub = image.subimage(200, 200, 100, 100); 
    sub.save("earth-subimage.ppm"); 
-
+   /*
    // gamma correction
    ppm_image gamma = image.gammaCorrect(0.6f); 
    gamma.save("earth-gamma-0.6.ppm"); 
