@@ -20,14 +20,8 @@ ppm_image::ppm_image()
 
 ppm_image::ppm_image(int w, int h) 
 {
-    format = "P3";
     columns = w;
     rows = h;
-    maxColor = 255;
-    for (int onePixel : pixels)
-    {
-        onePixel = 0;
-    }
 }
 
 ppm_image::ppm_image(const ppm_image& orig)
@@ -118,8 +112,8 @@ bool ppm_image::save(const std::string& filename) const
 
  ppm_image ppm_image::resize(int w, int h) const
 {
-    ppm_image result;
-    return result;
+     ppm_image result = new ppm_image( 2, 3);
+    return ppm_image(w,h);
 }
 
 ppm_image ppm_image::flip_horizontal() const

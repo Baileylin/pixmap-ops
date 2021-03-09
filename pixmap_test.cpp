@@ -35,11 +35,11 @@ int main(int argc, char** argv)
 
    // should print 400 400
    cout << "loaded earth: " << image.width() << " " << image.height() << endl;
-   /*
+   
    // resize
    ppm_image resize = image.resize(200,300);
    resize.save("earth-200-300.ppm");
-
+   /*
    // grayscale
    ppm_image grayscale = image.grayscale(); 
    grayscale.save("earth-grayscale.ppm");
