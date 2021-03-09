@@ -11,31 +11,31 @@ int main(int argc, char** argv)
    image.save("feep-test-save.ppm"); // should match original
    
    // should print 4 4
-  // cout << "loaded feep: " << image.width() << " " << image.height() << endl;
-   /*
+   cout << "loaded feep: " << image.width() << " " << image.height() << endl;
+   
    // test: copy constructor
    ppm_image copy = image; 
    copy.save("feep-test-copy.ppm"); // should match original and load into gimp
-
+   
    // test: assignment operator
    copy = image; 
    copy.save("feep-test-assignment.ppm"); // should match original and load into gimp
    
    // should print r,g,b
    ppm_pixel pixel = image.get(1, 1);
-   //cout << (int) pixel.r << " " << (int) pixel.g << " " << (int) pixel.b << endl;
+   cout << (int) pixel.r << " " << (int) pixel.g << " " << (int) pixel.b << endl;
    
    // test: setting a color
    pixel.r = 255;
-   image.set(1, 1, pixel);/*
+   image.set(1, 1, pixel);
    image.save("feep-test-newcolor.ppm");
-
+   
    // test a non-trivial image
    image.load("../images/earth-ascii.ppm"); // a real image
 
    // should print 400 400
    cout << "loaded earth: " << image.width() << " " << image.height() << endl;
-
+   /*
    // resize
    ppm_image resize = image.resize(200,300);
    resize.save("earth-200-300.ppm");
